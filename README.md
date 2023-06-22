@@ -25,4 +25,13 @@ The Movies-Library app includes the following features:
 
 - Favorite Page Endpoint (`/favorite`): Returns a plain text message "Welcome to Favorite Page".
 
+
+- Trending Movies Endpoint (`/trending`): Fetches trending movies from the Movie DB API and returns a JSON response with the movie details, including title, release date, poster path, and overview.
+
+- Movie Search Endpoint (`/search?query=<search-term>`): Searches for a movie by name using the Movie DB API and returns a JSON response with the search results, including movie details.
+
+- Upcoming Movies Endpoint (`/upcoming`): Fetches upcoming movies from the Movie DB API and returns a JSON response with the movie details.
+
+- Popular Movies Endpoint (`/popular`): Fetches popular movies from the Movie DB API and returns a JSON response with the movie details.
+
 - Error Handling: The server handles 404 errors (page not found) and 500 errors (server error) with appropriate status codes and response messages.
