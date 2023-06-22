@@ -35,3 +35,6 @@ The Movies-Library app includes the following features:
 - Popular Movies Endpoint (`/popular`): Fetches popular movies from the Movie DB API and returns a JSON response with the movie details.
 
 - Error Handling: The server handles 404 errors (page not found) and 500 errors (server error) with appropriate status codes and response messages.
+
+#### Lab 12 pic web req-res cycle
+![image](img/lab12%20web%20request-response%20cycle.jpeg)
