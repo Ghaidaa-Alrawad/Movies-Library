@@ -37,7 +37,7 @@ The Movies-Library app includes the following features:
 - Error Handling: The server handles 404 errors (page not found) and 500 errors (server error) with appropriate status codes and response messages.
 
 #### lab 11 pic web req-res cycle 
-![image](assets/lac%2011%20cycle.jpeg)
+git ![image](assets/lac%2011%20cycle.jpeg)
 
 #### Lab 12 pic web req-res cycle
 ![image](assets/lab12%20web%20request-response%20cycle.jpeg)
