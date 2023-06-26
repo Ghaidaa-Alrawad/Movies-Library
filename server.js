@@ -2,20 +2,66 @@
 
 const express = require("express");
 
-// const movieData = require("./MovieData/data.json");
+const movieData = require("./MovieData/data.json");
 
 const cors = require("cors");
 
 const axios = require("axios");
+
+const pg = require("pg");
 
 const app = express();
 
 require("dotenv").config();
 
 app.use(cors());
+//for the db
+app.use(express.json());// using this middleware we'll parse the body form the userRequest
+//without it we can't read any thing 
+
+// this is the best practise 
+const PORT = process.env.PORT;
 
 //this is the local host 3000, home
 app.get("/", handleHome);
+
+//connecting the DataBase
+const DB_URL = process.env.DATABASE_URL;
+const dbClient = new pg.Client(DB_URL);
+
+//for the database git/post, and new ports
+// the addMovie route 
+app.post("/addMovie", (req, res)=>{
+  // req.body
+  let title = req.body.t;
+  let year = req.body.y;
+  let comments = req.body.c;
+
+  //gitting the vlaues by destructureing
+  // let{t, y, c} = req.body;
+
+  let sql = `insert into movies(title, year, comments) values($1,$2,$3)`;
+  dbClient.query(sql,[title,year,comments]).then(()=>{
+    res.status(201).send(`movie ${title} added to the database`)
+  })
+  // res.send(req.body);
+});
+
+//the getMovies route 
+app.get("/getMovies", (req, res)=>{
+  let sql = `SELECT * FROM movies`;
+  dbClient.query(sql).then((movieD)=>{
+    res.status(200).send(movieD.rows)
+  });
+});
+
+
+//for the database
+dbClient.connect().then(()=>{
+  app.listen(PORT, ()=>{
+    console.log(`Listening at ${PORT}`)
+  })
+});
 
 //this for the favorite
 app.get("/favorite", favoriteHandeler);
@@ -120,14 +166,6 @@ app.get("/popular", (req, res) => {
 //this to handel the errors 
 app.get("*", errorHandeler);
 
-// app.use((req, res, next)=>{
-//     res.status(404).send({
-//     "code": 500,//it was here status, but i've change it to code
-//     "responseText": "Sorry, something went wrong"
-//     })
-// }
-// )
-
 //crating the constructor to git the data for the movies
 function Movie(title, posterPath, overview) {
     this.title = title;
@@ -144,25 +182,14 @@ function handleHome(req, res) {
     res.send(movies);
 }
 
-
 function favoriteHandeler(req, res){
     console.log("Welcome to Favorite Page");
     res.send("Welcome to Favorite Page");
 }
-
 
 function errorHandeler(req, res){
     res.send({
     "status": 500,
     "responseText": "Sorry, something went wrong"
     })
-}
-
-
-
-// starting the server handler
-app.listen(3000, startingLog);
-
-function startingLog(req, res) {
-  console.log("Running at 3000");
 }
