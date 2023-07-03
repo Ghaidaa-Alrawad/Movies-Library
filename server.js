@@ -38,13 +38,10 @@ app.post("/addMovie", (req, res)=>{
   let comments = req.body.c;
 
   //gitting the vlaues by destructureing
-  // let{t, y, c} = req.body;
-
   let sql = `insert into movies(title, year, comments) values($1,$2,$3)`;
   dbClient.query(sql,[title,year,comments]).then(()=>{
     res.status(201).send(`movie ${title} added to the database`)
   })
-  // res.send(req.body);
 });
 
 //the getMovies route 
@@ -54,7 +51,6 @@ app.get("/getMovies", (req, res)=>{
     res.status(200).send(movieD.rows)
   });
 });
-
 
 //for the database
 dbClient.connect().then(()=>{
@@ -163,6 +159,39 @@ app.get("/popular", (req, res) => {
 });
   
 
+// creating a request to the database 
+
+//Update request
+//in the mulan movie i've updated the comment to be " My childhood dream was to be like her"
+app.put("/updateMovie/:id", (req, res) => {
+  let { id } = req.params;
+  let { newComment } = req.body;
+  let sql = `UPDATE movies SET comments = '${newComment}' WHERE id = ${id}`;
+  dbClient.query(sql)
+    .then((data) => {
+      res.status(200).send(`Updated`);
+    });
+});
+
+
+//Delete request, will delete it by the id 
+//there was an element in the movise table with the is 2
+//i've tested this end point and it passed and deleted the element with the id 2 
+app.delete("/deleteMovie/:id", async (req, res) => {
+  let {id} = req.params;
+  let sql = `DELETE FROM movies WHERE id = ${id}`;
+  await dbClient.query(sql);
+  res.status(200).send('deleted from the database');
+});
+
+//getMovie by id request
+app.get("/getMoviesById/:id", (req, res)=>{
+  let {id} = req.params;
+  let sql = `SELECT * FROM movies WHERE id=${id}`;
+  dbClient.query(sql)
+  .then((data) => res.status(200).send(data.rows));
+});
+
 //this to handel the errors 
 app.get("*", errorHandeler);
 
@@ -193,3 +222,5 @@ function errorHandeler(req, res){
     "responseText": "Sorry, something went wrong"
     })
 }
+
+//this is the last lab 14
