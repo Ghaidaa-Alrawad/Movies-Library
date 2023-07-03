@@ -37,6 +37,14 @@ The Movies-Library app includes the following features:
 
 - Get Movies Endpoint (`/getMovies`): Retrieves movies from the PostgreSQL database and returns them as a JSON response.
 
+### These 3 Endpoints are built by the help of the (`id`), why?? so it can help us to deal with CURD for a pecific movie in the database
+
+- Update Endpoint (`/updateMovie`): To update the comment on a spicific movie
+
+- Delete EndPoin (`/deleteMovie`): To delete a spicific movie
+
+- Get Movies Endpoint (`/getMoviesById`): To get a spicific movie by the id of it 
+
 - Error Handling: The server handles 404 errors (page not found) and 500 errors (server error) with appropriate status codes and response messages.
 
 #### lab 11 pic web req-res cycle 
@@ -47,3 +55,6 @@ git ![image](assets/lac%2011%20cycle.jpeg)
 
 #### Lab 13 pic web req-res cycle
 ![image](assets/Lab%2013%20pic%20web%20req-res%20cycle.jpeg)
+
+#### Lab 14 pic web req-res cycle
+![image](assets/lab%2014%20cycle.jpeg)
