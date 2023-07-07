@@ -4,4 +4,4 @@ module.exports = (err, req, res, next) => {
       message: "Internal Server Error",
       Error: err,
     });
-  };
+};
