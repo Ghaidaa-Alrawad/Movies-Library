@@ -47,6 +47,10 @@ The Movies-Library app includes the following features:
 
 - Error Handling: The server handles 404 errors (page not found) and 500 errors (server error) with appropriate status codes and response messages.
 
+## Note 
+
+-(`Pleas, if you want to test the Routes, you shoulld put /movies/theManeOfTheRoutes in the URL, like this: https://movies-api2.onrender.com/movies/trending`)
+
 #### lab 11 pic web req-res cycle 
 git ![image](assets/lac%2011%20cycle.jpeg)
 
