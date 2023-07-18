@@ -48,6 +48,61 @@ Router.post("/", (req, res, next)=>{
   }
 });
 
+Router.post("/favMovie", (req, res, next)=>{
+  try{
+  // req.body
+  let title = req.body.t;
+  // let year = req.body.y;
+  let comments = req.body.c;
+
+  //gitting the vlaues by destructureing
+  let sql = `insert into fav(title, comments) values($1,$2)`;
+  client.query(sql,[title,comments]).then(()=>{
+    res.status(201).send(`movie ${title} added to the fav`)
+  })
+  } catch (e){
+    next.apply(`addMovies handler: ${e}`);
+  }
+});
+
+Router.get("/favMovie", (req, res, next)=>{
+  let sql = `SELECT * FROM fav`;
+  client.query(sql).then((data)=>{
+    res.status(200).send({
+      total : data.rows.length,
+      data : data.rows
+    })
+  }).catch((e)=>{
+    next.apply(`addMovies handler: ${e}`);
+  })
+})
+
+Router.put("/favMovie/:id", (req, res, next) => {
+
+  try{
+      let { id } = req.params;
+      let { newComment } = req.body;
+      let sql = `UPDATE fav SET comments = '${newComment}' WHERE id = ${id}`;
+      client.query(sql).then((data) => {
+          res.status(200).send(`Updated`);
+        });
+  } catch (e){
+      next(`updateMovie by id handler: ${e}`);
+  }
+
+});
+Router.delete("/favMovie/:id", async (req, res, next) => {
+  try{
+    let {id} = req.params;
+    let sql = `DELETE FROM fav WHERE id = ${id}`;
+    await client.query(sql);
+    res.status(200).send('deleted from the fav');
+  } catch (e){
+      next(`deleteMovie by id handler: ${e}`);
+  }
+});
+
+
 
 //this for the favorite
 Router.get("/favorite", favoriteHandeler);
