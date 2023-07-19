@@ -66,7 +66,7 @@ Router.post("/favMovie", (req, res, next)=>{
 });
 
 Router.get("/favMovie", (req, res, next)=>{
-  let sql = `SELECT * FROM fav`;
+  let sql = `SELECT * FROM fav order by id`;
   client.query(sql).then((data)=>{
     res.status(200).send({
       total : data.rows.length,
