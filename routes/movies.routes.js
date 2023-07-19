@@ -53,11 +53,12 @@ Router.post("/favMovie", (req, res, next)=>{
   // req.body
   let title = req.body.t;
   // let year = req.body.y;
+  let img = req.body.i;
   let comments = req.body.c;
 
   //gitting the vlaues by destructureing
-  let sql = `insert into fav(title, comments) values($1,$2)`;
-  client.query(sql,[title,comments]).then(()=>{
+  let sql = `insert into fav(title, img ,comments) values($1,$2, $3)`;
+  client.query(sql,[title,img,comments]).then(()=>{
     res.status(201).send(`movie ${title} added to the fav`)
   })
   } catch (e){
